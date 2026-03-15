@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Reporte de saldos - Alke Wallet{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Reporte de saldos por cliente</h2>
+
+<div class="alert alert-secondary">
+    Total de operaciones registradas en el sistema: <strong>{{ total_ops }}</strong>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Email</th>
+            <th>Saldo total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>${{ cliente.saldo_total }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-muted">Sin datos para mostrar.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

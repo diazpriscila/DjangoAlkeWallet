@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}{{ cliente.nombre }} - Alke Wallet{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>{{ cliente.nombre }}</h2>
+    <div>
+        <a href="{% url 'cliente_editar' cliente.pk %}" class="btn btn-outline-primary">Editar</a>
+        <a href="{% url 'cliente_lista' %}" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Email:</strong> {{ cliente.email }}</li>
+            <li class="list-group-item"><strong>Teléfono:</strong> {{ cliente.telefono|default:"No registrado" }}</li>
+            <li class="list-group-item"><strong>DNI:</strong> {{ cliente.dni }}</li>
+            <li class="list-group-item"><strong>Registrado:</strong> {{ cliente.fecha_registro|date:"d/m/Y" }}</li>
+        </ul>
+    </div>
+</div>
+
+<h5>Cuentas</h5>
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Tipo</th>
+            <th>Saldo</th>
+            <th>Estado</th>
+            <th>Apertura</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cuenta in cuentas %}
+        <tr>
+            <td>{{ cuenta.get_tipo_display }}</td>
+            <td>${{ cuenta.saldo }}</td>
+            <td>{% if cuenta.activa %}<span class="badge bg-success">Activa</span>{% else %}<span class="badge bg-secondary">Inactiva</span>{% endif %}</td>
+            <td>{{ cuenta.fecha_apertura|date:"d/m/Y" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-muted">Sin cuentas asociadas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
