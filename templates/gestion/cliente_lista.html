@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Clientes - Alke Wallet{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Clientes</h2>
+    <a href="{% url 'cliente_crear' %}" class="btn btn-dark">+ Nuevo cliente</a>
+</div>
+
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Buscar por nombre o email..." value="{{ busqueda }}">
+        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+    </div>
+</form>
+
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>DNI</th>
+            <th>Cuentas</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td><a href="{% url 'cliente_detalle' cliente.pk %}">{{ cliente.nombre }}</a></td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.telefono|default:"-" }}</td>
+            <td>{{ cliente.dni }}</td>
+            <td>{{ cliente.cantidad_cuentas }}</td>
+            <td>
+                <a href="{% url 'cliente_editar' cliente.pk %}" class="btn btn-sm btn-outline-primary">Editar</a>
+                <a href="{% url 'cliente_eliminar' cliente.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-muted">No hay clientes registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

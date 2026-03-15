@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Alke Wallet{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Panel principal</h2>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary shadow">
+            <div class="card-body">
+                <h6 class="card-title">Clientes</h6>
+                <h2>{{ total_clientes }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success shadow">
+            <div class="card-body">
+                <h6 class="card-title">Cuentas activas</h6>
+                <h2>{{ total_cuentas }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info shadow">
+            <div class="card-body">
+                <h6 class="card-title">Transacciones</h6>
+                <h2>{{ total_transacciones }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-dark shadow">
+            <div class="card-body">
+                <h6 class="card-title">Saldo total</h6>
+                <h2>${{ saldo_total }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5>Últimas transacciones</h5>
+<table class="table table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Cuenta origen</th>
+            <th>Tipo</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in ultimas_transacciones %}
+        <tr>
+            <td>{{ t.cuenta_origen }}</td>
+            <td>{{ t.get_tipo_display }}</td>
+            <td>${{ t.monto }}</td>
+            <td>{{ t.fecha|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-muted">No hay transacciones registradas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

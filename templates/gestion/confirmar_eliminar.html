@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Confirmar eliminación - Alke Wallet{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card border-danger shadow-sm">
+            <div class="card-body text-center p-4">
+                <h4 class="text-danger mb-3">¿Estás seguro?</h4>
+                <p class="mb-1">Vas a eliminar el siguiente {{ tipo }}:</p>
+                <p class="fw-bold">{{ objeto }}</p>
+                <p class="text-muted small">Esta acción no se puede deshacer.</p>
+                <form method="post" class="d-flex justify-content-center gap-3 mt-4">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
